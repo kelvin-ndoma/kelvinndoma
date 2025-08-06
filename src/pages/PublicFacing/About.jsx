@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Helmet } from "react-helmet";
 import logo from "../../assets/me.jpg"
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiLinkedin, FiInstagram, FiMail, FiSun, FiMoon, FiArrowRight, FiChevronDown, FiAward, FiZap, FiTrendingUp, FiLock, FiUnlock } from 'react-icons/fi';
@@ -19,6 +20,7 @@ const LockedContent = ({ title, icon, children }) => {
       <div
         className={`p-6 cursor-pointer flex items-center justify-between ${unlocked ? 'bg-blue-900/20' : 'bg-gray-800/50'}`}
         onClick={() => !unlocked && setUnlocked(true)}
+        aria-label={unlocked ? `Unlocked ${title} content` : `Locked ${title} content - click to unlock`}
       >
         <div className="flex items-center gap-4">
           <div className="text-2xl">
@@ -122,6 +124,7 @@ const MarketingQuiz = () => {
                   : 'bg-gray-800/50 border-gray-700 hover:bg-gray-700/50'} border`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                aria-label={`Answer option: ${answer.text}`}
               >
                 {answer.text}
               </motion.button>
@@ -146,6 +149,7 @@ const MarketingQuiz = () => {
               setQuizCompleted(false);
             }}
             className="mt-6 px-6 py-2 bg-blue-600 rounded-lg hover:bg-blue-700"
+            aria-label="Retake digital marketing quiz"
           >
             Retake Quiz
           </button>
@@ -166,8 +170,6 @@ const AboutPage = () => {
     document.documentElement.classList.add('dark');
   }, []);
 
-
-
   const unlockSection = (section) => {
     if (!unlockedSections.includes(section)) {
       setUnlockedSections([...unlockedSections, section]);
@@ -177,7 +179,7 @@ const AboutPage = () => {
   const services = [
     {
       title: "Digital Marketing",
-      description: "Data-driven campaigns that convert visitors into customers.",
+      description: "Data-driven campaigns that convert visitors into customers and maximize ROI through strategic SEM, social media advertising, and conversion rate optimization.",
       icon: <FaChartLine className="text-4xl" />,
       color: "text-blue-500 border-blue-500",
       items: [
@@ -187,13 +189,11 @@ const AboutPage = () => {
         "- Email Marketing Automation",
         "- Influencer Marketing Strategy",
         "- Marketing Strategy",
-
-
       ]
     },
     {
       title: "Fullstack Web Development",
-      description: "Blazing fast, modern websites & web apps.",
+      description: "High-performance web development with React, Next.js, and Node.js that delivers blazing fast, SEO-optimized websites and web applications.",
       icon: <FaCode className="text-4xl" />,
       color: "text-purple-500 border-purple-500",
       items: [
@@ -206,7 +206,7 @@ const AboutPage = () => {
     },
     {
       title: "Technical SEO",
-      description: "Optimized architecture that ranks & converts.",
+      description: "Comprehensive technical SEO services to improve rankings, organic traffic, and search engine visibility through architecture optimization.",
       icon: <TbSeo className="text-4xl" />,
       color: "text-green-500 border-green-500",
       items: [
@@ -218,8 +218,6 @@ const AboutPage = () => {
       ]
     }
   ];
-
-
 
   const marketingCaseStudies = [
     {
@@ -278,11 +276,49 @@ const AboutPage = () => {
   ];
 
   return (
-    <div
-      className="min-h-screen dark bg-gray-900 text-white"
-      ref={containerRef}
-    >
-      {/* Floating interactive elements (simplified) */}
+    <div className="min-h-screen dark bg-gray-900 text-white" ref={containerRef}>
+      <Helmet>
+        <title>Kelvin Ndoma | Digital Marketing & Web Development Expert</title>
+        <meta name="description" content="Kelvin Ndoma - Expert in digital marketing, technical SEO, and fullstack web development. Turning business visions into revenue-generating digital solutions." />
+        <meta name="keywords" content="digital marketing, web development, SEO expert, technical SEO, React developer, Next.js, Google Ads, Facebook Ads, conversion optimization" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com/" />
+        <meta property="og:title" content="Kelvin Ndoma | Digital Marketing & Web Development Expert" />
+        <meta property="og:description" content="Expert in digital marketing, technical SEO, and fullstack web development. Turning business visions into revenue-generating digital solutions." />
+        <meta property="og:image" content="https://yourdomain.com/assets/me.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://yourdomain.com/" />
+        <meta property="twitter:title" content="Kelvin Ndoma | Digital Marketing & Web Development Expert" />
+        <meta property="twitter:description" content="Expert in digital marketing, technical SEO, and fullstack web development. Turning business visions into revenue-generating digital solutions." />
+        <meta property="twitter:image" content="https://yourdomain.com/assets/me.jpg" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://yourdomain.com/" />
+
+        {/* Schema Markup */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Kelvin Ndoma",
+            "jobTitle": "Digital Marketing & Web Development Expert",
+            "url": "https://yourdomain.com",
+            "sameAs": [
+              "https://linkedin.com/in/kelvinndoma",
+              "https://instagram.com/yourprofile"
+            ],
+            "description": "Expert in digital marketing, technical SEO, and fullstack web development specializing in turning business visions into revenue-generating digital solutions.",
+            "image": "https://yourdomain.com/assets/me.jpg"
+          })}
+        </script>
+      </Helmet>
+
+      {/* Floating interactive elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {[...Array(10)].map((_, i) => (
           <div
@@ -316,6 +352,7 @@ const AboutPage = () => {
             whileTap={{ scale: 0.9 }}
             className="p-2 rounded-full bg-gray-800 hover:bg-gray-700"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Scroll to top"
           >
             <FiArrowRight className="transform rotate-90 text-xl" />
           </motion.button>
@@ -344,7 +381,10 @@ const AboutPage = () => {
                 />
                 <img
                   src={logo}
-                  alt="Kelvin Ndoma"
+                  alt="Kelvin Ndoma - Digital Marketing and Web Development Expert"
+                  width={500}
+                  height={500}
+                  loading="lazy"
                   className="relative rounded-2xl w-full h-auto object-cover shadow-2xl border-4 border-gray-800"
                 />
               </div>
@@ -374,16 +414,15 @@ const AboutPage = () => {
                 <div className="absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-purple-500"></div>
 
                 <p className="text-xl leading-relaxed text-white">
-                  <span className="font-bold">I'm Kelvin Ndoma.</span> I bring ideas to life at the crossroads of digital strategy, technology, and creative storytelling. Whether it's building brands, launching campaigns, or automating growth — I’m all about turning vision into velocity.
+                  <span className="font-bold">I'm Kelvin Ndoma.</span> I bring ideas to life at the crossroads of digital strategy, technology, and creative storytelling. Whether it's building brands, launching campaigns, or automating growth — I'm all about turning vision into velocity.
                   <br /><br />
                   My edge? <span className="font-bold">Data-driven creativity.</span> I believe the best ideas are born from insight and shaped by imagination. I use sharp analytics and experimental thinking to craft experiences that not only look stunning but also inspire action and drive results.
                   <br /><br />
                   From zero to launch — I help people and businesses get unstuck, show up online with clarity, and grow with intention. Strategy is the engine. Design is the fuel. Execution is everything.
                   <br /><br />
-                  This isn’t just digital work — it’s transformation in motion.
+                  This isn't just digital work — it's transformation in motion.
                 </p>
               </motion.div>
-
 
               <motion.div
                 initial={{ opacity: 0 }}
