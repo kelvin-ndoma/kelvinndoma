@@ -1,4 +1,4 @@
-export const BASE_URL = "https://task-manager-phi-azure.vercel.app";
+export const BASE_URL = "https://kelvinndoma-tasks-manager.onrender.com";
 
 export const API_PATHS = {
     AUTH: {
